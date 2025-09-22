@@ -10,6 +10,8 @@ spring:
     url: jdbc:mysql://localhost:3306/memo_250922?serverTimezone=Asia/Seoul
     username: root
     password: ${mysql.password}
+  mvc:
+    static-path-pattern: /static/**
 
 mybatis:
   mapper-locations: mappers/*Mapper.xml
