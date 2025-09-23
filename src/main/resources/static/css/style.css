@@ -5,13 +5,15 @@
 
 header {
     height:100px;
+    background-color:#dddddd;
 }
 
 .contents > .user-box {
     width:400px;
-    height:500px;
+    background-color:#dddddd;
 }
 
 footer {
     height:80px;
+    background-color:#dddddd;
 }
