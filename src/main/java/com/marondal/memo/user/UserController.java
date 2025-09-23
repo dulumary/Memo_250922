@@ -12,4 +12,6 @@ public class UserController {
     public String joinForm() {
         return "user/join";
     }
+
+
 }
