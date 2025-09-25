@@ -1,6 +1,7 @@
 package com.marondal.memo.user.service;
 
 import com.marondal.memo.common.MD5HashingEncoder;
+import com.marondal.memo.user.domain.User;
 import com.marondal.memo.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,4 +32,12 @@ public class UserService {
             return false;
         }
     }
+
+    public User getUser(String loginId, String password) {
+
+        String encodedPassword = MD5HashingEncoder.encode(password);
+
+        return userRepository.selectUser(loginId, encodedPassword);
+    }
+
 }
