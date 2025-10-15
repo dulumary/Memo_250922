@@ -55,4 +55,43 @@ public class MemoService {
 
     }
 
+    public boolean updateMemo(long id, String title, String contents) {
+        // 수정대상 객체 얻어 오기
+        Optional<Memo> optionalMemo = memoRepository.findById(id);
+
+        if(optionalMemo.isPresent()) {
+
+            Memo memo = optionalMemo.get();
+
+            memo = memo.toBuilder()
+                    .title(title)
+                    .contents(contents)
+                    .build();
+
+            try {
+                memoRepository.save(memo);
+            } catch(DataAccessException e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+        
+    }
+
+    public boolean deleteMemo(long id) {
+
+        Optional<Memo> optionalMemo = memoRepository.findById(id);
+
+        if(optionalMemo.isPresent()) {
+            memoRepository.delete(optionalMemo.get());
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
 }
