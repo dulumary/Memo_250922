@@ -11,7 +11,7 @@
         <textarea th:text="${memo.contents}" class="form-control mt-2" rows="12" placeholder="내용을 입력하세요" id="contentsInput">메모 내용 샘플</textarea>
         <img class="w-100" th:src="${memo.imagePath}" src="https://cdn.pixabay.com/photo/2025/09/23/19/27/nature-9851216_1280.jpg">
         <div class="d-flex justify-content-between mt-3">
-            <button type="button" class="btn btn-danger">삭제</button>
+            <button type="button" class="btn btn-danger" id="removeBtn">삭제</button>
             <div>
                 <a href="/memo/list" class="btn btn-secondary">목록으로</a>
                 <button type="button" class="btn btn-secondary" id="saveBtn">수정</button>
@@ -21,6 +21,26 @@
 </section>
 
 <script layout:fragment="script">
+
+    $("#removeBtn").on("click", function() {
+        let memoId = $("#memoContents").data("memo-id");
+
+        $.ajax({
+            type:"delete"
+            , url:"/memo/remove"
+            , data:{"id":memoId}
+            , success:function(response) {
+                if(response.result == "success") {
+                    location.href = "/memo/list";
+                } else {
+                    alert("삭제 실패!");
+                }
+            }
+            , error:function() {
+                alert("삭제 에러!");
+            }
+        });
+    });
 
     $("#saveBtn").on("click", function() {
 

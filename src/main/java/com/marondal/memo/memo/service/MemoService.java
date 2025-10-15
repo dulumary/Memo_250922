@@ -86,7 +86,10 @@ public class MemoService {
         Optional<Memo> optionalMemo = memoRepository.findById(id);
 
         if(optionalMemo.isPresent()) {
-            memoRepository.delete(optionalMemo.get());
+            Memo memo = optionalMemo.get();
+
+            FileManager.removeFile(memo.getImagePath());
+            memoRepository.delete(memo);
         } else {
             return false;
         }
