@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+<section layout:fragment="contents" class="contents d-flex justify-content-center">
+    <div class="memo-box my-5" th:data-memo-id="${memo.id}" id="memoContents">
+        <h1 class="text-center">메모 상세</h1>
+        <input type="text" th:value="${memo.title}" value="메모 제목 샘플" class="form-control mt-4" placeholder="제목을 입력하세요" id="titleInput">
+        <textarea th:text="${memo.contents}" class="form-control mt-2" rows="12" placeholder="내용을 입력하세요" id="contentsInput">메모 내용 샘플</textarea>
+        <img class="w-100" th:src="${memo.imagePath}" src="https://cdn.pixabay.com/photo/2025/09/23/19/27/nature-9851216_1280.jpg">
+        <div class="d-flex justify-content-between mt-3">
+            <button type="button" class="btn btn-danger" id="removeBtn">삭제</button>
+            <div>
+                <a href="/memo/list" class="btn btn-secondary">목록으로</a>
+                <button type="button" class="btn btn-secondary" id="saveBtn">수정</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script layout:fragment="script">
+
+    $("#removeBtn").on("click", function() {
+        let memoId = $("#memoContents").data("memo-id");
+
+        $.ajax({
+            type:"delete"
+            , url:"/memo/remove"
+            , data:{"id":memoId}
+            , success:function(response) {
+                if(response.result == "success") {
+                    location.href = "/memo/list";
+                } else {
+                    alert("삭제 실패!");
+                }
+            }
+            , error:function() {
+                alert("삭제 에러!");
+            }
+        });
+    });
+
+    $("#saveBtn").on("click", function() {
+
+        let memoId = $("#memoContents").data("memo-id");
+        let title = $("#titleInput").val();
+        let contents = $("#contentsInput").val();
+
+        $.ajax({
+            type:"put"
+            , url:"/memo/modify"
+            , data:{"id":memoId, "title":title, "contents": contents}
+            , success:function(response) {
+                if(response.result == "success") {
+                    location.reload();
+                } else {
+                    alert("메모 수정 실패!");
+                }
+            }
+            , error:function() {
+                alert("메모 수정 에러!");
+            }
+        });
+
+    });
+
+</script>
+</html>

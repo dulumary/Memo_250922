@@ -1,0 +1,23 @@
+#wrap {
+    width:1200px;
+    margin:0 auto;
+}
+
+header {
+    height:100px;
+    background-color:#dddddd;
+}
+
+.contents > .user-box {
+    width:400px;
+    background-color:#dddddd;
+}
+
+.contents > .memo-box {
+    width:800px;
+}
+
+footer {
+    height:80px;
+    background-color:#dddddd;
+}
